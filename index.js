@@ -31,6 +31,7 @@ server.get('/api/lessons', (req, res) => {
         })
 })
 
+
 server.get('/api/lessons/:id', (req, res) => {
     const { id } = req.params;
     Lessons.findById(id)
