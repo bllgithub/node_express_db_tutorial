@@ -17,19 +17,26 @@ module.exports = {
     updateMessage
 };
 
-// X in postgress!
+// works in postgress!
 async function add(lesson) {
-// Returns [2] in "mysql", "sqlite"; [2, 3] in "postgresql"
-//knex.insert([{title: 'Great Gatsby'}, {title: 'Fahrenheit 451'}], ['id']).into('books')    
-    return await db.insert(lesson, ['id']).into('lessons')
-// this is the way portgress wants us to return value
-   // return await db('lessons').insert(lesson, ['id', 'name'])
+
+    // knex('books')
+    // .returning('id')
+    // .insert([{title: 'Great Gatsby'}, {title: 'Fahrenheit 451'}])
+
+    return await db('lessons')
+    .returning('id')
+    .insert(lesson)
+
+    // this is the way portgress wants us to return value(working one)
+    //return await db.insert(lesson, ['id']).into('lessons')
+   
+    // return await db('lessons').insert(lesson, ['id', 'name'])
 
     // //this way of returning a value is only for sqlite3
     // const [id] = await db("lessons").insert(lesson);
     // return id;
 }
-
 
 // works in postgress!
 async function read() {
@@ -43,6 +50,7 @@ async function findById(id) {
         .first();
 }
 
+// works in postgress!
 async function remove(id) {
     return await db("lessons")
         .where({id}) // or .where({id:id}) 
