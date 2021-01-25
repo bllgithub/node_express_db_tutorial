@@ -18,8 +18,12 @@ module.exports = {
 };
 
 async function add(lesson) {
-    const [id] = await db("lessons").insert(lesson);
-    return id;
+    // this is the way portgress wants us to return value
+    return await db('lessons').insert(lesson, ['id', 'name'])
+
+    // //this way of returning a value is only for sqlite3
+    // const [id] = await db("lessons").insert(lesson);
+    // return id;
 }
 
 async function read() {
@@ -57,10 +61,16 @@ async function findMessageById(id) {
 }
 
 async function addMessage(message, lesson_id) {
-    const [id] = await db("messages")
+    // this is the way portgress wants us to return value
+    return await db('messages')
         .where({ lesson_id })
-        .insert(message);
-    return findMessageById(id);
+        .insert(message, [id])
+
+    // //this way of returning a value is only for sqlite3
+    // const [id] = await db("messages")
+    //     .where({ lesson_id })
+    //     .insert(message);
+    // return findMessageById(id);
 }
 
 async function findLessonMessages(lesson_id) {
