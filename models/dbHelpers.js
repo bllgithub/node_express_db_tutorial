@@ -20,18 +20,9 @@ module.exports = {
 // works in postgress!
 async function add(lesson) {
 
-    // knex('books')
-    // .returning('id')
-    // .insert([{title: 'Great Gatsby'}, {title: 'Fahrenheit 451'}])
-
     return await db('lessons')
-    .returning('id')
-    .insert(lesson)
-
-    // this is the way portgress wants us to return value(working one)
-    //return await db.insert(lesson, ['id']).into('lessons')
-   
-    // return await db('lessons').insert(lesson, ['id', 'name'])
+        .returning('id')
+        .insert(lesson)
 
     // //this way of returning a value is only for sqlite3
     // const [id] = await db("lessons").insert(lesson);
