@@ -19,7 +19,7 @@ module.exports = {
 
 // works in postgress!
 async function add(lesson) {
-
+    //below is for postgress
     return await db('lessons')
         .returning('id')
         .insert(lesson)
@@ -50,19 +50,14 @@ async function remove(id) {
 
 async function update(id, changes) {
 
-// // Returns [ { id: 42, title: "The Hitchhiker's Guide to the Galaxy" } ]
-// knex('books')
-//   .where({ id: 42 })
-//   .update({ title: "The Hitchhiker's Guide to the Galaxy" }, ['id', 'title'])    
-
+// works in postgress!
   return (
-        await db("lessons")
-            .where({id})
-            .update(changes, ['id'])
+    //await db("lessons").where({id}).update(changes, [id]) this works for sqlite3
+    //await db("lessons").where({id}).update(changes, ['id']) this works for postgress
+    await db("lessons").where({id}).update(changes, ['id'])
             .then(() => {
                 return findById(id);
             })
-
     );
 }
 
@@ -76,7 +71,7 @@ async function addMessage(message, lesson_id) {
     // this is the way portgress wants us to return value
     return await db('messages')
         .where({ lesson_id })
-        .insert(message, [id])
+        .insert(message, ['id'])
 
     // //this way of returning a value is only for sqlite3
     // const [id] = await db("messages")
