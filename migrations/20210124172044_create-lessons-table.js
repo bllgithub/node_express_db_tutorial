@@ -1,3 +1,13 @@
+// "knex migrate:make create-lessons-table" is run in the terminal to create this file 
+//  "20210124172044_create-lessons-table.js" in "migrations" folder.
+
+// then the below code is added and after that another command is executed which is
+// "knex migrate:latest" to finally create the "lessons" table in lessons.db3 with 
+// primary key, "name" fields.
+// "messages" table is also created with "sender", "text" and primary key fields. 
+
+//make sure that knex has already been installed globally by the command "npm i knex -g"
+//by bll, Jan 26, 2021
 
 exports.up = function(knex) {
   return knex.schema.createTable("lessons", tbl => {

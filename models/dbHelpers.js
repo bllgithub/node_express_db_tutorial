@@ -16,10 +16,27 @@ module.exports = {
     findMessageById,
     removeMessage,
     updateMessage,
-    findAllMessages
+    findAllMessages,
+
+    addUser,
+    findAllUsers,
+    findUserByUsername
 };
 
 // bll note:  ['id'] for postgress, [id] for sqlite3
+// "async" and "await" is used for functions with "insert" method
+
+async function addUser(user) {
+    return await db('users').insert(user, ['id'])
+}
+
+function findAllUsers() {
+    return db('users')
+}
+
+function findUserByUsername(username) {
+    return db('users').where({username}).first()
+}
 
 // works in postgress!
 async function add(lesson) {
