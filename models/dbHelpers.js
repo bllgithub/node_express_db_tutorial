@@ -49,10 +49,16 @@ async function remove(id) {
 }
 
 async function update(id, changes) {
-    return (
+
+// // Returns [ { id: 42, title: "The Hitchhiker's Guide to the Galaxy" } ]
+// knex('books')
+//   .where({ id: 42 })
+//   .update({ title: "The Hitchhiker's Guide to the Galaxy" }, ['id', 'title'])    
+
+  return (
         await db("lessons")
             .where({id})
-            .update(changes, [id])
+            .update(changes, ['id'])
             .then(() => {
                 return findById(id);
             })
