@@ -17,6 +17,8 @@ module.exports = {
     updateMessage
 };
 
+// bll note:  ['id'] for postgress, [id] for sqlite3
+
 // works in postgress!
 async function add(lesson) {
     //below is for postgress
@@ -48,6 +50,7 @@ async function remove(id) {
         .del();
 }
 
+// works in postgress!
 async function update(id, changes) {
 
 // works in postgress!
@@ -61,17 +64,20 @@ async function update(id, changes) {
     );
 }
 
+// works in postgress!
 async function findMessageById(id) {
     return await db("messages")
         .where({id}) // or .where({id:id}) 
         .first();
 }
 
+
+// works in postgress!
 async function addMessage(message, lesson_id) {
     // this is the way portgress wants us to return value
     return await db('messages')
         .where({ lesson_id })
-        .insert(message, ['id'])
+        .insert(message, ['id']) // bll note:  ['id'] for postgress, [id] for sqlite3
 
     // //this way of returning a value is only for sqlite3
     // const [id] = await db("messages")
@@ -102,7 +108,7 @@ async function removeMessage(id) {
 async function updateMessage(id, changes) {
     return db("messages")
     .where({ id })
-    .update(changes, [id])
+    .update(changes, ['id'])// bll note:  ['id'] for postgress, [id] for sqlite3
     .then(() => {
         return findMessageById(id)
     })
