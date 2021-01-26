@@ -15,7 +15,8 @@ module.exports = {
     findLessonMessages,
     findMessageById,
     removeMessage,
-    updateMessage
+    updateMessage,
+    findAllMessages
 };
 
 // bll note:  ['id'] for postgress, [id] for sqlite3
@@ -72,6 +73,9 @@ async function findMessageById(id) {
         .first();
 }
 
+async function findAllMessages() {
+    return await db("messages")
+}
 
 // works in postgress!
 async function addMessage(message, lesson_id) {

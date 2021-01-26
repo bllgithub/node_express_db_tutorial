@@ -4,6 +4,17 @@ const express = require('express');
 const router = express.Router();
 
 // all end points are for "/api/messages" routes
+router.get('/', (req, res) => {
+    Lessons.findAllMessages()
+    .then(messages => {
+        res.status(200).json(messages);
+    })
+    .catch(error => {
+        res.status(500).json({message:"Error in retrieving all messages!"})
+    })
+})
+
+// all end points are for "/api/messages" routes
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     Lessons.findMessageById(id)
@@ -11,7 +22,7 @@ router.get('/:id', (req, res) => {
             res.status(200).json(message);
         })
         .catch(error => {
-            res.status(500).json({message:"Error in finding message!"})
+            res.status(500).json({message:"Error in retrieving message!"})
         })
 });
 
