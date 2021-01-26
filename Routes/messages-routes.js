@@ -13,7 +13,7 @@ router.get('/:id', (req, res) => {
         .catch(error => {
             res.status(500).json({message:"Error in finding message!"})
         })
-})
+});
 
 //router.delete('/api/messages/:id', (req, res) => {
 router.delete('/:id', (req, res) => {

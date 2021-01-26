@@ -13,6 +13,7 @@ module.exports = {
     update,
     addMessage,
     findLessonMessages,
+    findMessageById,
     removeMessage,
     updateMessage
 };
