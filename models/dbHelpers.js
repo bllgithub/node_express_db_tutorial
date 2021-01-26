@@ -73,6 +73,7 @@ async function findMessageById(id) {
         .first();
 }
 
+// works in postgress!
 async function findAllMessages() {
     return await db("messages")
 }
@@ -91,6 +92,7 @@ async function addMessage(message, lesson_id) {
     // return findMessageById(id);
 }
 
+// works in postgress!
 async function findLessonMessages(lesson_id) {
     return await db("lessons as l")
         .join("messages as m", "l.id", "m.lesson_id")
@@ -104,12 +106,14 @@ async function findLessonMessages(lesson_id) {
         .where({ lesson_id })
 }
 
+// works in postgress!
 async function removeMessage(id) {
     return await db("messages")
         .where({id})
         .del()
 }
 
+// works in postgress!
 async function updateMessage(id, changes) {
     return db("messages")
     .where({ id })
