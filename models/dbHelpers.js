@@ -51,32 +51,32 @@ async function add(lesson) {
 }
 
 // works in postgress!
-async function read() {
-    return await db("lessons") // this "lessons" refers to the database name and not to table lessons
+function read() {
+    return db("lessons") // this "lessons" refers to the database name and not to table lessons
 }
 
 // works in postgress!
-async function findById(id) {
-    return await db("lessons")
+function findById(id) {
+    return db("lessons")
         .where({id}) // or .where({id:id}) 
         .first();
 }
 
 // works in postgress!
-async function remove(id) {
-    return await db("lessons")
+function remove(id) {
+    return db("lessons")
         .where({id}) // or .where({id:id}) 
         .del();
 }
 
 // works in postgress!
-async function update(id, changes) {
+function update(id, changes) {
 
 // works in postgress!
   return (
     //await db("lessons").where({id}).update(changes, [id]) this works for sqlite3
     //await db("lessons").where({id}).update(changes, ['id']) this works for postgress
-    await db("lessons").where({id}).update(changes, ['id'])
+    db("lessons").where({id}).update(changes, ['id'])
             .then(() => {
                 return findById(id);
             })
@@ -84,15 +84,15 @@ async function update(id, changes) {
 }
 
 // works in postgress!
-async function findMessageById(id) {
-    return await db("messages")
+function findMessageById(id) {
+    return db("messages")
         .where({id}) // or .where({id:id}) 
         .first();
 }
 
 // works in postgress!
-async function findAllMessages() {
-    return await db("messages")
+function findAllMessages() {
+    return db("messages")
 }
 
 // works in postgress!
@@ -110,8 +110,8 @@ async function addMessage(message, lesson_id) {
 }
 
 // works in postgress!
-async function findLessonMessages(lesson_id) {
-    return await db("lessons as l")
+function findLessonMessages(lesson_id) {
+    return db("lessons as l")
         .join("messages as m", "l.id", "m.lesson_id")
         .select(
             "l.id as lessonID",
@@ -124,14 +124,14 @@ async function findLessonMessages(lesson_id) {
 }
 
 // works in postgress!
-async function removeMessage(id) {
-    return await db("messages")
+function removeMessage(id) {
+    return db("messages")
         .where({id})
         .del()
 }
 
 // works in postgress!
-async function updateMessage(id, changes) {
+function updateMessage(id, changes) {
     return db("messages")
     .where({ id })
     .update(changes, ['id'])// bll note:  ['id'] for postgress, [id] for sqlite3

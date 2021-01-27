@@ -1,6 +1,7 @@
 const Lessons = require('../models/dbHelpers');
 const bcryptjs = require('bcryptjs');
 const express = require('express');
+const generateToken = require('./generateToken');
 
 const router = express.Router();
 
@@ -43,16 +44,11 @@ router.post('/login', (req, res) => {
     Lessons.findUserByUsername(username)
         .then(user => {
             if (user && bcryptjs.compareSync(password, user.password)) {
-                console.log("From /login endpoint before creation ... session object", req.session);                
 
-                // add object user to object session 
-                req.session.user = {
-                    id: user.id,
-                    username: user.username
-                }
-                console.log("From /login endpoint after creation ... session object", req.session);                
-
-                res.status(200).json({message:`Welcome ${user.username} !`});
+                const token = generateToken(user)
+                // bll note: this is a way to return data from server to client by adding some data
+                // just like this serial no that i added for experiment
+                res.status(200).json({message:`Welcome ${user.username} !`, token, serialno:"bll123456789"});
             } else {
                 res.status(401).json({message:"Invalid credentials!"});
             }
@@ -64,13 +60,11 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
     if (req.session) {
-        console.log("From /logout endpoint before destroying ... session object", req.session);                
         // when session is destroyed, object user is removed from object session  
         req.session.destroy((error) => {
             if (error) {
                 res.status(500).json({message:"You can checkout anytime but you can never leave!"});
             } else {
-                console.log("From /logout endpoint after destroyed ... session object", req.session);                
                 res.status(200).json({message:"Successfully loged out!"});
             }
         })

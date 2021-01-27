@@ -1,11 +1,21 @@
 // this is where we can control the access to resources endpoints
+const jwt = require("jsonwebtoken");
+
 // 
 module.exports = (req, res, next) => {
-    console.log("From middleware ... session object", req.session);
+    const token = req.headers.authorization;
+    const secret = process.env.SECRET;
 
-    if (req.session && req.session.user) {
-        next(); // allowed
+    if (token) {
+        jwt.verify(token, secret, (err, decodedToken) => {
+            if (err) {
+                res.status(401).json({message:"Invalid token received!"});
+            } else {
+                req.decodedToken = decodedToken;
+                next();
+            }
+        });
     } else {
-        res.status(401).json({message:"Sorry dude, can not let you in. "});
+        res.status(401).json({message:"No token received!"});
     }
 }
